@@ -59,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: NetworkFutureBuilder(
-        future: errorRequest(),
-        // Future.delayed(const Duration(seconds: 2)),
+        future: Future.delayed(const Duration(seconds: 2)),
+        // future: errorRequest(),
         withData: (data) => const Center(child: Text('加载成功')),
       ),
     );
