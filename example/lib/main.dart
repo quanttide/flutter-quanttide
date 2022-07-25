@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: '量潮设计语言'),
+      scrollBehavior: QuantTideScrollBehavior(),
     );
   }
 }
@@ -61,7 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: NetworkFutureBuilder(
         future: Future.delayed(const Duration(seconds: 2)),
         // future: errorRequest(),
-        withData: (data) => const Center(child: Text('加载成功')),
+        withData: (data) => ListView.builder(
+          itemCount: 25,
+          itemBuilder: (BuildContext context, int index){
+            return ListTile(title: Text('Item $index'));
+          },
+          controller: ScrollController(),
+          physics: const AlwaysScrollableScrollPhysics(),
+        ),
       ),
     );
   }
