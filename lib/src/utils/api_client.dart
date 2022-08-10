@@ -39,15 +39,24 @@ class APIClient {
     required String httpMethod,
     required String apiRoot,
     required String apiPath,
-    Map<String, dynamic>? queryParameters
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? data,
   }) async {
+    // 处理请求
     // https://api.dart.dev/stable/2.16.1/dart-core/Uri/Uri.https.html
     Uri url = Uri.https(apiRoot, apiPath, queryParameters);
     Map<String, String> headers = {
       'Content-Type': 'application/json',
-      // TODO: 暂时只允许服务端返回json格式。
-      'Accept': 'application/json',
     };
+    // 处理请求报文
+    Object? body;
+    if (data!=null && headers['Content-Type']=='application/json'){
+      body = json.encode(data);
+    }
+    else {
+      body = data;
+    }
+    // 发送请求
     http.Response response;
     // https://pub.dev/documentation/http/latest/http/http-library.html
     switch (httpMethod){
@@ -60,21 +69,22 @@ class APIClient {
       case 'GET':
         response = await client.get(url, headers: headers);
         break;
+      // Not safe methods, with `body`.
       case 'post':
       case 'POST':
-        response = await client.post(url, headers: headers);
+        response = await client.post(url, headers: headers, body: body);
         break;
       case 'put':
       case 'PUT':
-        response = await client.put(url, headers: headers);
+        response = await client.put(url, headers: headers, body: body);
         break;
       case 'patch':
       case 'PATCH':
-        response = await client.patch(url, headers: headers);
+        response = await client.patch(url, headers: headers, body: body);
         break;
       case 'delete':
       case 'DELETE':
-        response = await client.delete(url, headers: headers);
+        response = await client.delete(url, headers: headers, body: body);
         break;
       default:
         // TODO: 抛出异常

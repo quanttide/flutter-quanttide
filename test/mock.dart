@@ -8,10 +8,18 @@ import 'package:http/http.dart' as http;
 /// Mock函数
 Future<http.Response> mockClientHandler(http.Request request) async {
   if (request.method == 'GET' &&
-      request.url == Uri.https('api.example.com', '/path')
+      request.url == Uri.https('api.example.com', '/get')
   ){
-    // 200, 返回值为JSON
+    // GET方法，200, 返回值为JSON
     return http.Response(json.encode({'key': 'value'}), 200, headers: {
+      'Content-Type': 'application/json',
+    });
+  }
+  else if (request.method == 'POST' &&
+      request.url == Uri.https('api.example.com', '/post')
+  ){
+    // POST方法, 200, 返回值为JSON
+    return http.Response(request.body, 200, headers: {
       'Content-Type': 'application/json',
     });
   }

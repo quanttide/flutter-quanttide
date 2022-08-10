@@ -16,16 +16,25 @@ void main() {
         mock: true,
         mockClientHandler: mockClientHandler
     );
-    test('正常请求', () async {
+    test('正常GET请求', () async {
       dynamic responseData = await apiClient.requestAPI(
           httpMethod: 'GET',
           apiRoot: 'api.example.com',
-          apiPath: '/path'
+          apiPath: '/get'
       );
       expect(responseData['key'], 'value');
-      // expect(response.stream, 'OK');
     });
-    test('响应类型不是JSON', () async {
+    test('正常POST请求', () async {
+      dynamic responseData = await apiClient.requestAPI(
+          httpMethod: 'POST',
+          apiRoot: 'api.example.com',
+          apiPath: '/post',
+          data: {'key1': 'value1'}
+      );
+      // mock把请求报文作为相应报文直接返回以模拟动态API。
+      expect(responseData['key1'], 'value1');
+    });
+    test('响应类型不是JSON的请求', () async {
       dynamic responseData = await apiClient.requestAPI(
           httpMethod: 'GET',
           apiRoot: 'api.example.com',
