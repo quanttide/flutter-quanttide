@@ -32,7 +32,7 @@ class APIClient {
     client = RetryClient(client);
   }
 
-  /// 请求服务API、
+  /// 请求服务端API
   ///
   /// TODO: 增加POST传参
   Future<dynamic> requestAPI({
@@ -43,57 +43,66 @@ class APIClient {
   }) async {
     // https://api.dart.dev/stable/2.16.1/dart-core/Uri/Uri.https.html
     Uri url = Uri.https(apiRoot, apiPath, queryParameters);
-    // https://pub.dev/documentation/http/latest/http/get.html
-    // 目前服务端API都是GET方法
-    // TODO: switch实现httpMethod。
-    Function httpMethodFunc = _parseHttpMethod(httpMethod)!;
-    http.Response response = await httpMethodFunc(
-        url,
-        headers: {
-          // TODO: 暂时只允许json格式。
-          'content-type': 'application/json',
-        }
-    );
-    if (response.statusCode == 200){
-      return parseResponse(response);
-    }
-    else{
-      throw Error();
-    }
-  }
-
-  // 处理HTTP方法
-  Function? _parseHttpMethod(String httpMethod){
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      // TODO: 暂时只允许服务端返回json格式。
+      'Accept': 'application/json',
+    };
+    http.Response response;
+    // https://pub.dev/documentation/http/latest/http/http-library.html
     switch (httpMethod){
-      case 'get':
-      case 'GET':
-        return client.get;
-      case 'post':
-      case 'POST':
-        return client.post;
-      case 'put':
-      case 'PUT':
-        return client.put;
-      case 'patch':
-      case 'PATCH':
-        return client.patch;
-      case 'delete':
-      case 'DELETE':
-        return client.delete;
+      // Safe HTTP Method, without `body`
       case 'head':
       case 'HEAD':
-        return client.head;
+        response = await client.head(url, headers: headers);
+        break;
+      case 'get':
+      case 'GET':
+        response = await client.get(url, headers: headers);
+        break;
+      case 'post':
+      case 'POST':
+        response = await client.post(url, headers: headers);
+        break;
+      case 'put':
+      case 'PUT':
+        response = await client.put(url, headers: headers);
+        break;
+      case 'patch':
+      case 'PATCH':
+        response = await client.patch(url, headers: headers);
+        break;
+      case 'delete':
+      case 'DELETE':
+        response = await client.delete(url, headers: headers);
+        break;
       default:
-      // TODO: 抛出异常
+        // TODO: 抛出异常
         return null;
+    }
+    // 处理响应
+    if (response.statusCode == 200){
+      return parseResponseData(response);
+    }
+    else if (response.statusCode == 503){
+      // 增加临时异常的相关处理逻辑
+      throw Error();
+    }
+    else {
+      throw Error();
     }
   }
 
   /// 处理返回值
   ///
   /// TODO：增加除了json格式之外的处理。
-  dynamic parseResponse(http.Response response){
-    // https://stackoverflow.com/questions/55865173/how-to-decode-json-string-as-utf-8
-    return json.decode(utf8.decode(response.bodyBytes));
+  dynamic parseResponseData(http.Response response){
+    if (response.headers['Content-Type'] == 'application/json'){
+      // https://stackoverflow.com/questions/55865173/how-to-decode-json-string-as-utf-8
+      return json.decode(utf8.decode(response.bodyBytes));
+    }
+    else {
+      return response.body;
+    }
   }
 }

@@ -25,11 +25,19 @@ void main() {
       expect(responseData['key'], 'value');
       // expect(response.stream, 'OK');
     });
+    test('响应类型不是JSON', () async {
+      dynamic responseData = await apiClient.requestAPI(
+          httpMethod: 'GET',
+          apiRoot: 'api.example.com',
+          apiPath: '/return-no-json'
+      );
+      expect(responseData, 'OK');
+    });
     test('冷启动', () async {
       await apiClient.requestAPI(
           httpMethod: 'GET',
           apiRoot: 'api.example.com',
-          apiPath: '/cold_start'
+          apiPath: '/cold-start'
       );
     }, skip: 'TODO:待重新设计');
     test('请求失败', () async {
