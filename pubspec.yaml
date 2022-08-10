@@ -1,6 +1,7 @@
 name: quanttide_design
 description: Widgets and Utils for QuantTide Design
 version: 0.1.1-alpha.1
+repository: https://e.coding.net/quanttide/quanttide-design-engineering/quanttide-design-flutter.git
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
