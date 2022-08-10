@@ -9,8 +9,8 @@ import 'package:http/retry.dart';
 import 'package:http/testing.dart';
 
 
-/// 微信云托管APIClient
-class WXCloudRunAPIClient {
+/// APIClient
+class APIClient {
   /// 是否Mock
   bool mock;
   /// Mock函数
@@ -18,7 +18,7 @@ class WXCloudRunAPIClient {
   /// HTTP客户端
   late http.Client client;
 
-  WXCloudRunAPIClient({
+  APIClient({
     this.mock=false,
     this.mockClientHandler,
   }){

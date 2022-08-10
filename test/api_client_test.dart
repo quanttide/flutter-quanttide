@@ -12,7 +12,7 @@ import 'mock.dart';
 void main() {
   group('APIClient测试', () {
     // 打桩
-    WXCloudRunAPIClient apiClient = WXCloudRunAPIClient(
+    APIClient apiClient = APIClient(
         mock: true,
         mockClientHandler: mockClientHandler
     );
