@@ -8,6 +8,7 @@
 
 - `APIClient.requestAPI`增加`data`参数（类似Python`requests`库的`data`入参）和非安全HTTP方法的请求报文，
   增加通用异常抛出和503异常抛出。
+- 增加测试工具模块`testing`，增加组件测试工具`pumpAsyncWidget`和`WidgetTestWrapper`。
 
 ### Refactored
 
