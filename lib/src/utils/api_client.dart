@@ -34,7 +34,7 @@ class APIClient {
 
   /// 请求服务端API
   ///
-  /// TODO: 增加POST传参
+  /// 遵循Python `requests`库的API风格设计。
   Future<dynamic> requestAPI({
     required String httpMethod,
     required String apiRoot,
@@ -43,63 +43,29 @@ class APIClient {
     Map<String, dynamic>? data,
   }) async {
     // 处理请求
-    // https://api.dart.dev/stable/2.16.1/dart-core/Uri/Uri.https.html
-    Uri url = Uri.https(apiRoot, apiPath, queryParameters);
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-    };
-    // 处理请求报文
-    Object? body;
-    if (data!=null && headers['Content-Type']=='application/json'){
-      body = json.encode(data);
-    }
-    else {
-      body = data;
-    }
-    // 发送请求
-    http.Response response;
-    // https://pub.dev/documentation/http/latest/http/http-library.html
-    switch (httpMethod){
-      // Safe HTTP Method, without `body`
-      case 'head':
-      case 'HEAD':
-        response = await client.head(url, headers: headers);
-        break;
-      case 'get':
-      case 'GET':
-        response = await client.get(url, headers: headers);
-        break;
-      // Not safe methods, with `body`.
-      case 'post':
-      case 'POST':
-        response = await client.post(url, headers: headers, body: body);
-        break;
-      case 'put':
-      case 'PUT':
-        response = await client.put(url, headers: headers, body: body);
-        break;
-      case 'patch':
-      case 'PATCH':
-        response = await client.patch(url, headers: headers, body: body);
-        break;
-      case 'delete':
-      case 'DELETE':
-        response = await client.delete(url, headers: headers, body: body);
-        break;
-      default:
-        // TODO: 抛出异常
-        return null;
-    }
+    http.Request request = http.Request(
+        httpMethod,
+        Uri.https(apiRoot, apiPath, queryParameters)
+    );
+    // 修改默认Content-Type从text/plain为application/json
+    request.headers['Content-Type'] = 'application/json';
+    // 转格式
+    request.body = json.encode(data);
+    // 发送请求和接收响应
+    http.StreamedResponse streamedResponse = await client.send(request);
+    // TODO: 增加`stream` feature flag，控制返回格式。
+    http.Response response = await http.Response.fromStream(streamedResponse);
     // 处理响应
-    if (response.statusCode == 200){
-      return parseResponseData(response);
-    }
-    else if (response.statusCode == 503){
-      // 增加临时异常的相关处理逻辑
-      throw Error();
-    }
-    else {
-      throw Error();
+    switch (response.statusCode){
+      case 200:
+      case 201:
+        return parseResponseData(response);
+      case 204:
+        return null;
+      case 503:
+        throw Error();
+      default:
+        throw Error();
     }
   }
 
