@@ -6,7 +6,8 @@
 
 ### Features
 
-- `APIClient.requestAPI`增加`data`参数（类似Python`requests`库的`data`入参）和非安全HTTP方法的请求报文。
+- `APIClient.requestAPI`增加`data`参数（类似Python`requests`库的`data`入参）和非安全HTTP方法的请求报文，
+  增加通用异常抛出和503异常抛出。
 
 ### Refactored
 

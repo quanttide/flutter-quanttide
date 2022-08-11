@@ -42,19 +42,27 @@ void main() {
       );
       expect(responseData, 'OK');
     });
-    test('冷启动', () async {
-      await apiClient.requestAPI(
-          httpMethod: 'GET',
-          apiRoot: 'api.example.com',
-          apiPath: '/cold-start'
-      );
-    }, skip: 'TODO:待重新设计');
+    test('服务端冷启动中', () async {
+      try {
+        await apiClient.requestAPI(
+            httpMethod: 'GET',
+            apiRoot: 'api.example.com',
+            apiPath: '/cold-start'
+        );
+      } catch(e){
+        expect(e, isInstanceOf<ServiceUnavailableException>());
+      }
+    });
     test('请求失败', () async {
-      await apiClient.requestAPI(
-          httpMethod: 'GET',
-          apiRoot: 'api.example.com',
-          apiPath: '/failed'
-      );
-    }, skip: 'TODO:待重新设计');
+      try {
+        await apiClient.requestAPI(
+            httpMethod: 'GET',
+            apiRoot: 'api.example.com',
+            apiPath: '/failed'
+        );
+      } catch(e){
+        expect(e, isInstanceOf<http.ClientException>());
+      }
+    });
   });
 }
