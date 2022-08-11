@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [v0.1.2] - 
+## [v0.1.2] - 2022-08-11
 
 优化`APIClient`。
 
@@ -14,6 +14,10 @@
 
 - APIClient的`parseResponse`重命名为`parseResponseData`，增加`Content-Type`分类处理。
   （PS：此方法暂不列为公开API，因此不影响其他库的使用，不作为不兼容更新列举。）
+  
+## [v0.1.2-beta.1] - 2022-08-11
+
+验证本版本API可用性。
 
 ## [v0.1.1] - 2022-08-10
 
