@@ -1,6 +1,6 @@
 name: quanttide_design
 description: Widgets and Utils for QuantTide Design
-version: 0.1.2-beta.1
+version: 0.1.2-beta.2
 repository: https://e.coding.net/quanttide/quanttide-design-engineering/quanttide-design-flutter.git
 
 environment:
@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_test:
+    sdk: flutter
   http: ^0.13.4
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
