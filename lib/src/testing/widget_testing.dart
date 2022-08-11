@@ -18,6 +18,11 @@ Future<dynamic> pumpAsyncWidget(WidgetTester tester, Widget widget) async {
 
 
 /// 组件测试Wrapper
+///
+/// ```dart
+/// Widget widget = ...;
+/// await tester.pumpWidget(WidgetTestWrapper(widget: widget));
+/// ```
 class WidgetTestWrapper extends StatelessWidget {
   final Widget widget;
 
