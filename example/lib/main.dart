@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quanttide_design/quanttide_design.dart';
 
+import 'environment_config.dart';
 // import 'utils.dart';
 
 
@@ -60,16 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: NetworkFutureBuilder(
-        future: Future.delayed(const Duration(seconds: 2)),
-        // future: errorRequest(),
-        withData: (data) => ListView.builder(
-          itemCount: 25,
-          itemBuilder: (BuildContext context, int index){
-            return ListTile(title: Text('Item $index'));
-          },
-          controller: ScrollController(),
-          physics: const AlwaysScrollableScrollPhysics(),
+        future: APIClient().requestAPI(
+            httpMethod: 'GET',
+            apiRoot: EnvironmentConfig.apiRoot,
+            apiPath: EnvironmentConfig.apiPath,
         ),
+        // future: errorRequest(),
+        withData: (data) => const Text('请求成功'),
       ),
     );
   }
