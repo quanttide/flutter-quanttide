@@ -24,3 +24,8 @@ doc/api/
 
 # IDE
 .idea/
+
+# Env
+environment_config.dart
+/.flutter-plugins
+/.flutter-plugins-dependencies

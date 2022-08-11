@@ -75,17 +75,16 @@ class APIClient {
 
   /// （暂时为非公开API）处理返回值
   ///
-  /// `Content-Type`为`application/json`时返回JSON解析以后的数据；
-  /// 其他情况暂时返回原始响应报文。
+  /// 尝试以JSON格式解析，异常则抛出。
   ///
   /// TODO：
+  ///   - 根据`Content-Type`对应解析数据，并覆盖对应测试。
   ///   - 允许用户继承并覆盖处理逻辑。
   dynamic parseResponseData(http.Response response){
-    if (response.headers['Content-Type'] == 'application/json'){
+    try {
       // https://stackoverflow.com/questions/55865173/how-to-decode-json-string-as-utf-8
       return json.decode(utf8.decode(response.bodyBytes));
-    }
-    else {
+    } catch(e) {
       return response.body;
     }
   }
