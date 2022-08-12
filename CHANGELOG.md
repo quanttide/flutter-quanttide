@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [v0.2.0] - 
+
+(break change) 增加用户鉴权组件。
+
+### Features 
+
+`APIClient`:
+- 增加账号密码注册API`signup`。
+- 增加账号密码登录API`login`。
+
+测试工具：
+- 增加`pumpWidget`函数。
+
+### Refactored 
+
+`APIClient`:
+- (break change)构造器的入参`mockClientHandler`重命名为`mockHandler`。
+- (break change)`requestAPI`方法的`apiRoot`重命名为`apiHost`。
+
 ## [v0.1.2] - 2022-08-11
 
 优化`APIClient`。

@@ -14,17 +14,17 @@ class APIClient {
   /// 是否Mock
   bool mock;
   /// Mock函数
-  MockClientHandler? mockClientHandler;
+  MockClientHandler? mockHandler;
   /// HTTP客户端
   late http.Client client;
 
   APIClient({
     this.mock=false,
-    this.mockClientHandler,
+    this.mockHandler,
   }){
     if (mock){
       // Mock
-      client = MockClient(mockClientHandler!);
+      client = MockClient(mockHandler!);
     }
     else {
       // 真实
@@ -47,7 +47,7 @@ class APIClient {
   ///   - 响应码为201、204等正常情况、30X等重定向情况待验证，暂不确定是否会有异常。
   Future<dynamic> requestAPI({
     required String httpMethod,
-    required String apiRoot,
+    required String apiHost,
     required String apiPath,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
@@ -55,7 +55,7 @@ class APIClient {
     // 处理请求
     http.Request request = http.Request(
         httpMethod,
-        Uri.https(apiRoot, apiPath, queryParameters)
+        Uri.https(apiHost, apiPath, queryParameters)
     );
     request.headers['Content-Type'] = 'application/json';
     request.body = json.encode(data);  // 转格式为String
@@ -102,6 +102,24 @@ class APIClient {
       default:
         throw http.ClientException('HTTP请求异常', response.request?.url);
     }
+  }
+
+  /// 账号密码注册API
+  dynamic signup(String apiHost){
+    return requestAPI(
+      httpMethod: 'POST',
+      apiHost: apiHost,
+      apiPath: '/signup/',
+    );
+  }
+
+  /// 账号密码登录API
+  dynamic login(String apiHost){
+    return requestAPI(
+      httpMethod: 'POST',
+      apiHost: apiHost,
+      apiPath: '/login/',
+    );
   }
 }
 

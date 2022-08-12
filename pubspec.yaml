@@ -1,6 +1,6 @@
 name: quanttide_design
 description: Widgets and Utils for QuantTide Design
-version: 0.1.2
+version: 0.2.0-alpha.1
 repository: https://e.coding.net/quanttide/quanttide-design-engineering/quanttide-design-flutter.git
 
 environment:
@@ -12,18 +12,35 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
+  # HTTP
   http: ^0.13.4
+  # 状态管理
+  provider: ^6.0.3
+  # 数据模型
+  freezed_annotation: ^2.1.0
+  json_annotation: ^4.6.0
+  # 用户登录
+  flutter_login: ^4.0.0
 
 dev_dependencies:
   integration_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
+  # 数据模型
+  freezed: ^2.1.0
+  build_runner: ^2.2.0
+  json_serializable: ^6.3.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
 
   # To add assets to your package, add an assets section, like this:
   # assets:

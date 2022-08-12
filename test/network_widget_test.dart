@@ -12,10 +12,10 @@ void main(){
     NetworkFutureBuilder widget = NetworkFutureBuilder(
       future: APIClient(
           mock: true,
-          mockClientHandler: mockClientHandler
+          mockHandler: mockHandler
       ).requestAPI(
         httpMethod: 'GET',
-        apiRoot: 'api.example.com',
+        apiHost: 'api.example.com',
         apiPath: '/get',
       ),
       withData: (dynamic data) => const Text('请求成功'),

@@ -6,7 +6,9 @@ import 'package:http/http.dart' as http;
 
 
 /// Mock函数
-Future<http.Response> mockClientHandler(http.Request request) async {
+///
+/// TODO: 声明式配置代替if else。
+Future<http.Response> mockHandler(http.Request request) async {
   if (request.method == 'GET' &&
       request.url == Uri.https('api.example.com', '/get')
   ){
@@ -35,6 +37,16 @@ Future<http.Response> mockClientHandler(http.Request request) async {
     // 503
     /// TODO: 模拟冷启动完成
     return http.Response('Clod Starting', 503);
+  }
+  else if (request.method == 'POST'
+      && request.url == Uri.https('api.example.com', '/signup/')){
+    // 注册
+    return http.Response('OK', 200);
+  }
+  else if (request.method == 'POST'
+      && request.url == Uri.https('api.example.com', '/login/')){
+    // 登录
+    return http.Response('OK', 200);
   }
   else {
     // 默认为404
