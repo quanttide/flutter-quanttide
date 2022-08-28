@@ -2,6 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../quanttide_design.dart';
+
 part 'user.freezed.dart';
 part 'user.g.dart';
 
@@ -14,5 +16,5 @@ class UserModel with _$UserModel {
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json)
-  => _$UserModelFromJson(json);
+  => _$UserModelFromJson(convertKeysToCamel(json));
 }

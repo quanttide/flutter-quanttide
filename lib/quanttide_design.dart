@@ -6,6 +6,7 @@ export 'src/screens/login.dart';
 export 'src/widgets/network.dart';
 // 数据模型
 export 'src/models/user.dart';
+// API
+export 'src/api/client.dart';
 // 工具
-export 'src/utils/api_client.dart';
 export 'src/utils/recase.dart';
