@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 /// TODO: 声明式配置代替if else。
 Future<http.Response> mockHandler(http.Request request) async {
   if (request.method == 'GET' &&
-      request.url == Uri.https('api.example.com', '/get')
+      request.url == Uri.https('api.example.com', '/root/get')
   ){
     // GET方法，200, 返回值为JSON
     return http.Response(json.encode({'key': 'value'}), 200, headers: {
@@ -18,7 +18,7 @@ Future<http.Response> mockHandler(http.Request request) async {
     });
   }
   else if (request.method == 'POST' &&
-      request.url == Uri.https('api.example.com', '/post')
+      request.url == Uri.https('api.example.com', '/root/post')
   ){
     // POST方法, 200, 返回值为JSON
     return http.Response(request.body, 200, headers: {
@@ -26,27 +26,17 @@ Future<http.Response> mockHandler(http.Request request) async {
     });
   }
   else if (request.method == 'GET' &&
-      request.url == Uri.https('api.example.com', '/return-no-json')
+      request.url == Uri.https('api.example.com', '/root/return-no-json')
   ){
     // 200，返回值非JSON
     return http.Response("OK", 200);
   }
   else if (request.method == 'GET' &&
-      request.url == Uri.https('api.example.com', '/cold-start')
+      request.url == Uri.https('api.example.com', '/root/cold-start')
   ){
     // 503
     /// TODO: 模拟冷启动完成
     return http.Response('Clod Starting', 503);
-  }
-  else if (request.method == 'POST'
-      && request.url == Uri.https('api.example.com', '/signup/')){
-    // 注册
-    return http.Response('OK', 200);
-  }
-  else if (request.method == 'POST'
-      && request.url == Uri.https('api.example.com', '/login/')){
-    // 登录
-    return http.Response('OK', 200);
   }
   else {
     // 默认为404

@@ -1,6 +1,7 @@
 /// 量潮APIClient
 ///
 /// 用以Flutter客户端访问量潮REST API标准提供的服务。
+/// 每个实例只可以访问一个固定根目录的服务端。
 /// 提供了对冷启动状态下503状态码的处理。
 
 import 'dart:convert';
@@ -13,17 +14,36 @@ import './exceptions.dart';
 
 /// APIClient
 class APIClient {
+  /// API根目录
+  /// i.e. 'https://api.example.com/root'
+  /// 注意末尾不要带`/`，在`apiPath`带，以提高和社区习惯的一致性。
+  String apiRoot;
+  /// API协议
+  late String apiScheme;
+  /// API主机
+  late String apiHost;
+  /// API根路径
+  late String apiRootPath;
+
   /// 是否Mock
   bool mock;
   /// Mock函数
   MockClientHandler? mockHandler;
+
   /// HTTP客户端
   late http.Client client;
 
   APIClient({
+    required this.apiRoot,
     this.mock=false,
     this.mockHandler,
   }){
+    // 初始化API根目录配置
+    apiScheme = Uri.parse(apiRoot).scheme;
+    apiHost = Uri.parse(apiRoot).host;
+    apiRootPath = Uri.parse(apiRoot).path;
+
+    // 初始化HTTP客户端
     if (mock){
       // Mock
       client = MockClient(mockHandler!);
@@ -39,7 +59,7 @@ class APIClient {
 
   /// 请求服务端API
   ///
-  /// 遵循Python `requests`库的API风格设计。
+  /// 参考Python `requests`库的API风格设计。
   ///   - 默认`Content-Type`从`text/plain`修改为`application/json`，
   ///     以适应前后端API常见的传参习惯。
   ///
@@ -49,18 +69,14 @@ class APIClient {
   ///   - 响应码为201、204等正常情况、30X等重定向情况待验证，暂不确定是否会有异常。
   Future<dynamic> requestAPI({
     required String httpMethod,
-    required String apiRoot,
     required String apiPath,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
   }) async {
-    // 处理请求
-    String apiScheme = Uri.parse(apiRoot).scheme; // TODO: 处理非https情况
-    String apiHost = Uri.parse(apiRoot).host;
     Uri url = Uri(
       scheme: apiScheme,
       host: apiHost,
-      path: apiPath,
+      path: "$apiRootPath$apiPath",
       queryParameters: queryParameters,
     );
     http.Request request = http.Request(httpMethod, url);
