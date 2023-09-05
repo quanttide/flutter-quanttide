@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quanttide_design/quanttide_design.dart';
+import 'package:quanttide_design/flutter_quanttide.dart';
 
 
 void main(){

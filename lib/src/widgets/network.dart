@@ -1,4 +1,4 @@
-/// 网络数据加载组件
+/// （Deprecated）网络数据加载组件
 ///
 /// 参考资料：
 ///   - https://blog.csdn.net/u011272795/article/details/83010974

@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import "package:quanttide_design/testing.dart";
 
 import "package:flutter/material.dart";
-import "package:quanttide_design/quanttide_design.dart";
+import "package:quanttide_design/flutter_quanttide.dart";
 
 import 'mock.dart';
 
