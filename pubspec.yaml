@@ -13,10 +13,11 @@ dependencies:
   flutter_test:
     sdk: flutter
   # HTTP
-  http: ^0.13.4
+  http: ">=1.1.0"
   # 状态管理
-  provider: ^6.0.3
-  recase: ^4.1.0
+  provider: ">=6.0.0"
+  # 字段
+  recase: ">=3.0.0"
 
 dev_dependencies:
   integration_test:

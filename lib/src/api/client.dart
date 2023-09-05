@@ -1,12 +1,14 @@
-/// 微信云托管APIClient
+/// 量潮APIClient
 ///
-/// 用以Flutter客户端访问微信云托管提供的服务。
+/// 用以Flutter客户端访问量潮REST API标准提供的服务。
 /// 提供了对冷启动状态下503状态码的处理。
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 import 'package:http/testing.dart';
+
+import './exceptions.dart';
 
 
 /// APIClient
@@ -47,16 +49,21 @@ class APIClient {
   ///   - 响应码为201、204等正常情况、30X等重定向情况待验证，暂不确定是否会有异常。
   Future<dynamic> requestAPI({
     required String httpMethod,
-    required String apiHost,
+    required String apiRoot,
     required String apiPath,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
   }) async {
     // 处理请求
-    http.Request request = http.Request(
-        httpMethod,
-        Uri.https(apiHost, apiPath, queryParameters)
+    String apiScheme = Uri.parse(apiRoot).scheme; // TODO: 处理非https情况
+    String apiHost = Uri.parse(apiRoot).host;
+    Uri url = Uri(
+      scheme: apiScheme,
+      host: apiHost,
+      path: apiPath,
+      queryParameters: queryParameters,
     );
+    http.Request request = http.Request(httpMethod, url);
     request.headers['Content-Type'] = 'application/json';
     request.body = json.encode(data);  // 转格式为String
     // 发送请求和接收响应
@@ -103,31 +110,4 @@ class APIClient {
         throw http.ClientException('HTTP请求异常', response.request?.url);
     }
   }
-
-  /// 账号密码注册API
-  dynamic signup(String apiHost){
-    return requestAPI(
-      httpMethod: 'POST',
-      apiHost: apiHost,
-      apiPath: '/signup/',
-    );
-  }
-
-  /// 账号密码登录API
-  dynamic login(String apiHost){
-    return requestAPI(
-      httpMethod: 'POST',
-      apiHost: apiHost,
-      apiPath: '/login/',
-    );
-  }
-}
-
-
-/// 503 Service Unavailable
-class ServiceUnavailableException extends http.ClientException {
-  ServiceUnavailableException(
-      String message,
-      [Uri? uri]
-  ) : super(message, uri);
 }

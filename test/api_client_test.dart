@@ -5,7 +5,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:quanttide_design/src/api/client.dart';
+import 'package:flutter_quanttide/api_client.dart';
 import 'mock.dart';
 
 
@@ -19,7 +19,7 @@ void main() {
     test('正常GET请求', () async {
       dynamic responseData = await apiClient.requestAPI(
           httpMethod: 'GET',
-          apiHost: 'api.example.com',
+          apiRoot: 'https://api.example.com',
           apiPath: '/get'
       );
       expect(responseData['key'], 'value');
@@ -27,7 +27,7 @@ void main() {
     test('正常POST请求', () async {
       dynamic responseData = await apiClient.requestAPI(
           httpMethod: 'POST',
-          apiHost: 'api.example.com',
+          apiRoot: 'https://api.example.com',
           apiPath: '/post',
           data: {'key1': 'value1'}
       );
@@ -37,7 +37,7 @@ void main() {
     test('响应类型不是JSON的请求', () async {
       dynamic responseData = await apiClient.requestAPI(
           httpMethod: 'GET',
-          apiHost: 'api.example.com',
+          apiRoot: 'https://api.example.com',
           apiPath: '/return-no-json'
       );
       expect(responseData, 'OK');
@@ -46,7 +46,7 @@ void main() {
       try {
         await apiClient.requestAPI(
             httpMethod: 'GET',
-            apiHost: 'api.example.com',
+            apiRoot: 'https://api.example.com',
             apiPath: '/cold-start'
         );
       } catch(e){
@@ -57,18 +57,12 @@ void main() {
       try {
         await apiClient.requestAPI(
             httpMethod: 'GET',
-            apiHost: 'api.example.com',
+            apiRoot: 'https://api.example.com',
             apiPath: '/failed'
         );
       } catch(e){
         expect(e, isInstanceOf<http.ClientException>());
       }
-    });
-    test('注册', () async {
-      await apiClient.signup('api.example.com');
-    });
-    test('登录', () async {
-      await apiClient.login('api.example.com');
     });
   });
 }
