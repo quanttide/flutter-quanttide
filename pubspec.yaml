@@ -1,7 +1,7 @@
 name: flutter_quanttide
 description: 量潮Flutter工具箱
 version: 0.2.0-alpha.1
-repository: hhttps://github.com/quanttide/flutter-quanttide.git
+repository: https://github.com/quanttide/flutter-quanttide.git
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
