@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quanttide_design/flutter_quanttide.dart';
+import 'package:flutter_quanttide/recase.dart';
 
 
 void main(){

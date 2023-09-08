@@ -1,8 +1,9 @@
-import "package:flutter_test/flutter_test.dart";
-import "package:quanttide_design/testing.dart";
-
 import "package:flutter/material.dart";
-import "package:quanttide_design/flutter_quanttide.dart";
+import "package:flutter_test/flutter_test.dart";
+
+import "package:flutter_quanttide/testing.dart";
+import "package:flutter_quanttide/api_client.dart";
+import "package:flutter_quanttide/src/widgets/network.dart";
 
 import 'mock.dart';
 
@@ -12,10 +13,10 @@ void main(){
     NetworkFutureBuilder widget = NetworkFutureBuilder(
       future: APIClient(
           mock: true,
-          mockHandler: mockHandler
+          mockHandler: mockHandler,
+          apiRoot: 'http://api.example.com/root'
       ).requestAPI(
         httpMethod: 'GET',
-        apiHost: 'api.example.com',
         apiPath: '/get',
       ),
       withData: (dynamic data) => const Text('请求成功'),
