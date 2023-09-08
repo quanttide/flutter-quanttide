@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quanttide_design/flutter_quanttide.dart';
+import 'package:flutter_quanttide/api_client.dart';
+import 'package:flutter_quanttide/src/widgets/network.dart';
+import 'package:flutter_quanttide/src/app.dart';
+
 
 import 'environment_config.dart';
 // import 'utils.dart';
@@ -61,9 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: NetworkFutureBuilder(
-        future: APIClient().requestAPI(
+        future: APIClient(
+          apiRoot: EnvironmentConfig.apiRoot,
+        ).requestAPI(
             httpMethod: 'GET',
-            apiHost: EnvironmentConfig.apiRoot,
             apiPath: EnvironmentConfig.apiPath,
         ),
         // future: errorRequest(),
