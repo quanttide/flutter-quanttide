@@ -22,6 +22,8 @@ class APIClient {
   late String apiScheme;
   /// API主机
   late String apiHost;
+  /// API端口
+  late int apiPort;
   /// API根路径
   late String apiRootPath;
 
@@ -41,6 +43,7 @@ class APIClient {
     // 初始化API根目录配置
     apiScheme = Uri.parse(apiRoot).scheme;
     apiHost = Uri.parse(apiRoot).host;
+    apiPort = Uri.parse(apiRoot).port;
     apiRootPath = Uri.parse(apiRoot).path;
 
     // 初始化HTTP客户端
@@ -76,6 +79,7 @@ class APIClient {
     Uri url = Uri(
       scheme: apiScheme,
       host: apiHost,
+      port: apiPort,
       path: "$apiRootPath$apiPath",
       queryParameters: queryParameters,
     );
