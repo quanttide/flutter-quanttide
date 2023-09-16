@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: NetworkFutureBuilder(
         future: APIClient(
           apiRoot: EnvironmentConfig.apiRoot,
-        ).requestAPI(
+        ).request(
             httpMethod: 'GET',
             apiPath: EnvironmentConfig.apiPath,
         ),

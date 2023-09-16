@@ -1,19 +1,13 @@
-/// 量潮APIClient
-///
-/// 用以Flutter客户端访问量潮REST API标准提供的服务。
-/// 每个实例只可以访问一个固定根目录的服务端。
-/// 提供了对冷启动状态下503状态码的处理。
+/// API
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 import 'package:http/testing.dart';
 
-import './exceptions.dart';
 
-
-/// APIClient
-class APIClient {
+/// API
+class ApiService {
   /// API根目录
   /// i.e. 'https://api.example.com/root'
   /// 注意末尾不要带`/`，在`apiPath`带，以提高和社区习惯的一致性。
@@ -35,7 +29,7 @@ class APIClient {
   /// HTTP客户端
   late http.Client client;
 
-  APIClient({
+  ApiService({
     required this.apiRoot,
     this.mock=false,
     this.mockHandler,
@@ -70,7 +64,7 @@ class APIClient {
   ///   - 增加特性开关`stream`参数，控制返回格式为`Response`或`StreamedResponse`，
   ///     以方便`FutureBuilder`或者`StreamBuilder`使用。
   ///   - 响应码为201、204等正常情况、30X等重定向情况待验证，暂不确定是否会有异常。
-  Future<dynamic> requestAPI({
+  Future<dynamic> request({
     required String httpMethod,
     required String apiPath,
     Map<String, dynamic>? queryParameters,
@@ -115,7 +109,7 @@ class APIClient {
       return response.body;
     }
   }
-  
+
   /// （暂时为非公开API）处理异常情况
   ///
   /// TODO：
@@ -124,10 +118,25 @@ class APIClient {
   dynamic handleHttpException(http.Response response){
     switch (response.statusCode) {
       case 503:
-        // 已知问题：后台冷启动时返回
+      // 已知问题：后台冷启动时返回
         throw ServiceUnavailableException('服务端冷启动中', response.request?.url);
       default:
         throw http.ClientException('HTTP请求异常', response.request?.url);
     }
   }
+}
+
+
+/// REST API
+class RestApiService extends ApiService {
+  RestApiService({required super.apiRoot});
+}
+
+
+/// 503 Service Unavailable
+class ServiceUnavailableException extends http.ClientException {
+  ServiceUnavailableException(
+      String message,
+      [Uri? uri]
+      ) : super(message, uri);
 }
