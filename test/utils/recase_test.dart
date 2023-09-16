@@ -36,4 +36,48 @@ void main(){
       expect(result, expectedList);
     });
   });
+
+  test('Convert keys to snake case', () {
+    final originalData = {
+      'firstName': 'John',
+      'lastName': 'Doe',
+      'contactInfo': {
+        'emailAddress': 'john.doe@example.com',
+        'phoneNumber': '1234567890',
+      },
+      'orders': [
+        {
+          'orderId': '12345',
+          'orderDate': '2022-01-01',
+        },
+        {
+          'orderId': '67890',
+          'orderDate': '2022-02-01',
+        },
+      ],
+    };
+
+    final expectedData = {
+      'first_name': 'John',
+      'last_name': 'Doe',
+      'contact_info': {
+        'email_address': 'john.doe@example.com',
+        'phone_number': '1234567890',
+      },
+      'orders': [
+        {
+          'order_id': '12345',
+          'order_date': '2022-01-01',
+        },
+        {
+          'order_id': '67890',
+          'order_date': '2022-02-01',
+        },
+      ],
+    };
+
+    final convertedData = convertKeysToSnake(originalData);
+
+    expect(convertedData, expectedData);
+  });
 }

@@ -22,3 +22,20 @@ dynamic convertKeysToCamel<T>(T data){
     throw "未支持的数据类型";
   }
 }
+
+
+/// 驼峰形命名的键转蛇形
+dynamic convertKeysToSnake<T>(T data) {
+  if (data is Map<String, dynamic>) {
+    return data.map((key, value) {
+      if (value is Map<String, dynamic> || value is List<Map<String, dynamic>>) {
+        value = convertKeysToSnake(value); // 对字典或列表做递归
+      }
+      return MapEntry(ReCase(key).snakeCase, value);
+    });
+  } else if (data is List<Map<String, dynamic>>) {
+    return data.map((item) => convertKeysToSnake(item)).toList(); // 对列表里的每个元素做递归
+  } else {
+    throw "未支持的数据类型";
+  }
+}
