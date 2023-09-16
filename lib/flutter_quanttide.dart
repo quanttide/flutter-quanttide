@@ -1,2 +1,2 @@
 // BLoC
-export 'src/blocs/models.dart';
+export 'src/blocs/domain_models.dart';

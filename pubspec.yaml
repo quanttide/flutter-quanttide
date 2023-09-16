@@ -4,7 +4,7 @@ version: 0.2.0-alpha.1
 repository: https://github.com/quanttide/flutter-quanttide.git
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -14,9 +14,8 @@ dependencies:
     sdk: flutter
   # 数据模型
   freezed_annotation: ">2.0.0"
-  json_annotation: ">=4.0.0"
+  json_annotation: ">=4.8.1"
   recase: ">=3.0.0"
-  uuid: ">=4.0.0"
   # 网络请求
   http: ">=1.1.0"
 
