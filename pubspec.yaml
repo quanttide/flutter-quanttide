@@ -12,18 +12,22 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  # HTTP
-  http: ">=1.1.0"
-  # 状态管理
-  provider: ">=6.0.0"
-  # 字段
+  # 数据模型
+  freezed_annotation: ">2.0.0"
+  json_annotation: ">=4.0.0"
   recase: ">=3.0.0"
+  uuid: ">=4.0.0"
+  # 网络请求
+  http: ">=1.1.0"
 
 dev_dependencies:
   integration_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
-
+  flutter_lints: ">2.0.0"
+  # 数据模型
+  build_runner: ">=2.0.0"
+  freezed: ">=2.0.0"
+  json_serializable: ">=6.0.0"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
