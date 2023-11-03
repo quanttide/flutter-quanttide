@@ -1,6 +1,6 @@
 /// Repository类
 
-import 'api_services.dart';
+import '../providers/api.dart';
 
 
 /// Repository

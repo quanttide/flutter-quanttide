@@ -1,5 +1,5 @@
 // 领域模型
-export 'src/models/entities.dart';
+export 'src/schemas/entities.dart';
 // 数据提供者
-export 'src/repositories/api_services.dart';
+export 'src/providers/api.dart';
 // BLoC
