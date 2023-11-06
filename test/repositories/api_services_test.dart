@@ -10,10 +10,10 @@ import 'package:flutter_quanttide/flutter_quanttide.dart';
 
 void main() {
   group('ApiService', () {
-    late ApiService apiService;
+    late ApiClient apiService;
 
     setUp(() {
-      apiService = ApiService(apiRoot: 'https://api.example.com');
+      apiService = ApiClient(apiRoot: 'https://api.example.com');
     });
 
     group('parseResponseData', () {

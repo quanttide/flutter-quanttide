@@ -5,6 +5,6 @@ import '../providers/api.dart';
 
 /// Repository
 class Repository {
-  ApiService apiService;
+  ApiClient apiService;
   Repository(this.apiService);
 }

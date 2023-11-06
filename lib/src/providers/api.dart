@@ -3,11 +3,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
-import 'package:http/testing.dart';
 
 
 /// API
-class ApiService {
+class ApiClient {
   /// API根目录
   /// i.e. 'https://api.example.com/root'
   /// 注意末尾不要带`/`，在`apiPath`带，以提高和社区习惯的一致性。
@@ -21,18 +20,11 @@ class ApiService {
   /// API根路径
   late String apiRootPath;
 
-  /// 是否Mock
-  bool mock;
-  /// Mock函数
-  MockClientHandler? mockHandler;
-
   /// HTTP客户端
   late http.Client client;
 
-  ApiService({
+  ApiClient({
     required this.apiRoot,
-    this.mock=false,
-    this.mockHandler,
   }){
     // 初始化API根目录配置
     apiScheme = Uri.parse(apiRoot).scheme;
@@ -41,17 +33,9 @@ class ApiService {
     apiRootPath = Uri.parse(apiRoot).path;
 
     // 初始化HTTP客户端
-    if (mock){
-      // Mock
-      client = MockClient(mockHandler!);
-    }
-    else {
-      // 真实
-      client = http.Client();
-    }
-    // 处理503重试
+    // RetryClient用于处理503重试
     // TODO: 通过调节RetryClient参数调整冷启动处理策略。
-    client = RetryClient(client);
+    client = RetryClient(http.Client());
   }
 
   /// 请求服务端API
@@ -124,12 +108,6 @@ class ApiService {
         throw http.ClientException('HTTP请求异常', response.request?.url);
     }
   }
-}
-
-
-/// REST API
-class RestApiService extends ApiService {
-  RestApiService({required super.apiRoot});
 }
 
 
