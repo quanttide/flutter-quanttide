@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quanttide/api_client.dart';
+import 'package:flutter_quanttide/flutter_quanttide.dart';
 import 'package:flutter_quanttide/src/widgets/network.dart';
 import 'package:flutter_quanttide/src/app.dart';
 
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: NetworkFutureBuilder(
-        future: APIClient(
+        future: ApiClient(
           apiRoot: EnvironmentConfig.apiRoot,
         ).request(
             httpMethod: 'GET',
