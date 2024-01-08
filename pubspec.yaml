@@ -4,8 +4,8 @@ version: 0.2.0-alpha.1
 repository: https://github.com/quanttide/flutter-quanttide
 
 environment:
-  sdk: ">=3.0.0"
-  flutter: ">=1.17.0"
+  sdk: "^3.0.0"
+  flutter: "^3.0.0"
 
 dependencies:
   flutter:
