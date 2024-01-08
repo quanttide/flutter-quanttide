@@ -1,7 +1,7 @@
 name: flutter_quanttide
 description: 量潮Flutter工具箱
 version: 0.2.0-alpha.1
-repository: https://github.com/quanttide/flutter-quanttide.git
+repository: https://github.com/quanttide/flutter-quanttide
 
 environment:
   sdk: ">=3.0.0"
@@ -13,11 +13,11 @@ dependencies:
   flutter_test:
     sdk: flutter
   # 数据模型
-  freezed_annotation: ">2.0.0"
-  json_annotation: ">=4.8.1"
-  recase: ">=3.0.0"
+  freezed_annotation: "^2.0.0"
+  json_annotation: "^4.8.1"
+  recase: "^4.1.0"
   # 网络请求
-  http: ">=1.1.0"
+  http: "^1.1.0"
 
 dev_dependencies:
   integration_test:
